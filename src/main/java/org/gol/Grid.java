@@ -20,4 +20,23 @@ public class Grid {
             }
         }
     }
+
+    StringBuilder builder = new StringBuilder();
+
+    @Override
+    public String toString() {
+        builder.append("Widht = ").append(width).append("\n");
+        builder.append("Height = ").append(height).append("\n");
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (new Cell().isAlive()){
+                    builder.append("O");
+                } else {
+                    builder.append("X");
+                }
+            }
+            builder.append("\n");
+        }
+        return builder.toString();
+    }
 }
