@@ -26,8 +26,9 @@ public class Grid {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Width = ").append(width).append("\n");
-        builder.append("Height = ").append(height).append("\n");
+        builder.append("Width: ").append(width).append("\n");
+        builder.append("Height: ").append(height).append("\n");
+        builder.append("\n");
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (cells[i][j].isAlive()){
