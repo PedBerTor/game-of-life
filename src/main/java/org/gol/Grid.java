@@ -21,15 +21,16 @@ public class Grid {
         }
     }
 
-    StringBuilder builder = new StringBuilder();
+
 
     @Override
     public String toString() {
-        builder.append("Widht = ").append(width).append("\n");
+        StringBuilder builder = new StringBuilder();
+        builder.append("Width = ").append(width).append("\n");
         builder.append("Height = ").append(height).append("\n");
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (new Cell().isAlive()){
+                if (cells[i][j].isAlive()){
                     builder.append("O");
                 } else {
                     builder.append("X");
