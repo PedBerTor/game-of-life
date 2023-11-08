@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 public class Controller {
 
     private static final long GAME_LOOP_DURATION = 500L;
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private static final ScheduledExecutorService SCHEDULER = Executors.newScheduledThreadPool(1);
 
     private final Grid grid;
 
@@ -23,7 +23,7 @@ public class Controller {
             processNeighbors();
             processCellsState();
         };
-        scheduler.scheduleAtFixedRate(gameLoop, 0L, GAME_LOOP_DURATION, TimeUnit.MILLISECONDS);
+        SCHEDULER.scheduleAtFixedRate(gameLoop, 0L, GAME_LOOP_DURATION, TimeUnit.MILLISECONDS);
     }
 
     private void processNeighbors() {
