@@ -9,13 +9,13 @@ public class GridTest {
     private static final int GRID_HEIGHT = 4;
     private static final int GRID_WIDTH = 20;
     private static final String TO_STRING_EXPECTED_OUTPUT = """
-            Width: 20
             Height: 4
+            Width: 20
                         
-            XXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXX
+            X X X X X X X X X X X X X X X X X X X X\s
+            X X X X X X X X X X X X X X X X X X X X\s
+            X X X X X X X X X X X X X X X X X X X X\s
+            X X X X X X X X X X X X X X X X X X X X\s
             """;
 
     private final Grid grid;
