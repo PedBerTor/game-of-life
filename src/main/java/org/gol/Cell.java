@@ -1,24 +1,16 @@
 package org.gol;
 
+import java.util.Collections;
+import java.util.Set;
+
 public class Cell {
 
-    private final int verticalPosition;
-    private final int horizontalPosition;
-
     private boolean isAlive = false;
+    private Set<Cell> neighbors = Collections.emptySet();
     private int aliveNeighbors = 0;
 
-    public Cell(int verticalPosition, int horizontalPosition) {
-        this.verticalPosition = verticalPosition;
-        this.horizontalPosition = horizontalPosition;
-    }
-
-    public int getVerticalPosition() {
-        return verticalPosition;
-    }
-
-    public int getHorizontalPosition() {
-        return horizontalPosition;
+    public Cell() {
+        super();
     }
 
     public boolean isAlive() {
@@ -29,8 +21,17 @@ public class Cell {
         isAlive = !isAlive;
     }
 
-    public void addAliveNeighbor() {
-        aliveNeighbors++;
+    public void setNeighbors(Set<Cell> neighbors) {
+        if (neighbors.isEmpty() || neighbors.size() > 8) {
+            throw new UnsupportedOperationException("A cell must have between one and eight neighbors");
+        }
+        this.neighbors = neighbors;
+    }
+
+    public void calculateAliveNeighbors() {
+        aliveNeighbors = (int) neighbors.stream()
+                .filter(Cell::isAlive)
+                .count();
     }
 
     public void updateStateBasedOnNeighbors() {

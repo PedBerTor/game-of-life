@@ -1,5 +1,10 @@
 package org.gol;
 
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class Grid {
 
     private final int height;
@@ -11,13 +16,47 @@ public class Grid {
         this.width = width;
         cells = new Cell[height][width];
         fillGrid();
+        addNeighbors();
     }
 
     private void fillGrid() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                cells[i][j] = new Cell(i, j);
+                cells[i][j] = new Cell();
             }
+        }
+    }
+
+    private void addNeighbors() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                cells[i][j].setNeighbors(getNeighbors(i, j));
+            }
+        }
+    }
+
+    private Set<Cell> getNeighbors(int verticalReference, int horizontalReference) {
+        Stream.Builder<Cell> builder = Stream.builder();
+
+        builder.add(getCell(verticalReference - 1, horizontalReference - 1));
+        builder.add(getCell(verticalReference - 1, horizontalReference));
+        builder.add(getCell(verticalReference, horizontalReference - 1));
+        builder.add(getCell(verticalReference + 1, horizontalReference + 1));
+        builder.add(getCell(verticalReference + 1, horizontalReference));
+        builder.add(getCell(verticalReference, horizontalReference + 1));
+        builder.add(getCell(verticalReference - 1, horizontalReference + 1));
+        builder.add(getCell(verticalReference + 1, horizontalReference - 1));
+
+        return builder.build()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+    }
+
+    public Cell getCell(int verticalPosition, int horizontalPosition) {
+        try {
+            return cells[verticalPosition][horizontalPosition];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
         }
     }
 
@@ -27,14 +66,6 @@ public class Grid {
 
     public int getWidth() {
         return width;
-    }
-
-    public Cell getCell(int verticalPosition, int horizontalPosition) {
-        try {
-            return cells[verticalPosition][horizontalPosition];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
     }
 
     @Override
