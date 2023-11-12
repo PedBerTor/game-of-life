@@ -1,0 +1,14 @@
+{
+  "height": 15,
+  "width": 60,
+  "aliveCells": [
+    {
+      "verticalPosition": 0,
+      "horizontalPosition": 0
+    },
+    {
+      "verticalPosition": 0,
+      "horizontalPosition": 1
+    }
+  ]
+}
