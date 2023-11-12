@@ -69,6 +69,26 @@ public class Grid {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof Grid grid) {
+            if ((grid.height == this.height) && (grid.width == this.width)) {
+                for (int i = 0; i < grid.height; i++) {
+                    for (int j = 0; j < grid.width; j++) {
+                        if (grid.cells[i][j].isAlive() != this.cells[i][j].isAlive()) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Height: ").append(height).append("\n");
