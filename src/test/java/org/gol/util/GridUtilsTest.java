@@ -61,8 +61,6 @@ public class GridUtilsTest {
     public void saveToFile() throws IOException {
         GridUtils.saveToFile(grid, OUTPUT_TEMP_FILE_NAME);
         String serializedSavedGrid = getFileContent();
-        String a = OUTPUT_TEMP_FILE_CONTENT.trim();
-        String b = serializedSavedGrid.trim();
         assertEquals(OUTPUT_TEMP_FILE_CONTENT.trim(), serializedSavedGrid.trim());
     }
 
