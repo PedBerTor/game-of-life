@@ -23,7 +23,7 @@ public class Cell {
 
     public void setNeighbors(Set<Cell> neighbors) {
         if (neighbors.size() < 3 || neighbors.size() > 8) {
-            throw new UnsupportedOperationException("A cell must have between one and eight neighbors");
+            throw new RuntimeException("A cell must have between one and eight neighbors");
         }
         this.neighbors = neighbors;
     }
@@ -35,10 +35,8 @@ public class Cell {
     }
 
     public void updateStateBasedOnNeighbors() {
-        if (isAliveAndDies()) {
-            isAlive = false;
-        } else if (isDeadAndRevives()) {
-            isAlive = true;
+        if (isAliveAndDies() || isDeadAndRevives()) {
+            switchState();
         }
         aliveNeighbors = 0;
     }
