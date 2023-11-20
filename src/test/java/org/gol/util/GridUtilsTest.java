@@ -25,22 +25,22 @@ public class GridUtilsTest {
     private static final Path OUTPUT_TEMP_FILE_PATH = Paths.get("src/main/resources/grids/temp-file.json");
     private static final String OUTPUT_TEMP_FILE_CONTENT = """
             {
-                "height": 5,
-                "width": 5,
-                "aliveCells": [
-                    {
-                        "verticalPosition": 2,
-                        "horizontalPosition": 1
-                    },
-                    {
-                        "verticalPosition": 2,
-                        "horizontalPosition": 2
-                    },
-                    {
-                        "verticalPosition": 2,
-                        "horizontalPosition": 3
-                    }
-                ]
+              "height": 5,
+              "width": 5,
+              "aliveCells": [
+                {
+                  "verticalPosition": 2,
+                  "horizontalPosition": 1
+                },
+                {
+                  "verticalPosition": 2,
+                  "horizontalPosition": 2
+                },
+                {
+                  "verticalPosition": 2,
+                  "horizontalPosition": 3
+                }
+              ]
             }
             """;
 
@@ -61,6 +61,8 @@ public class GridUtilsTest {
     public void saveToFile() throws IOException {
         GridUtils.saveToFile(grid, OUTPUT_TEMP_FILE_NAME);
         String serializedSavedGrid = getFileContent();
+        String a = OUTPUT_TEMP_FILE_CONTENT.trim();
+        String b = serializedSavedGrid.trim();
         assertEquals(OUTPUT_TEMP_FILE_CONTENT.trim(), serializedSavedGrid.trim());
     }
 

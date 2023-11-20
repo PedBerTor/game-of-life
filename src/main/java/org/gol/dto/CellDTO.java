@@ -2,11 +2,22 @@ package org.gol.dto;
 
 public class CellDTO {
 
-    /* TODO: Implement DTO for Cell
-     * - Private instance variables (see sample.json)
-     * - Empty constructor
-     * - Getters and setters for all instance variables
-     *
-     * IF NEEDED: Static methods fromCell/toCell
-     */
+    private int verticalPosition;
+    private int horizontalPosition;
+
+    public int getVerticalPosition() {
+        return verticalPosition;
+    }
+
+    public void setVerticalPosition(int verticalPosition) {
+        this.verticalPosition = verticalPosition;
+    }
+
+    public int getHorizontalPosition() {
+        return horizontalPosition;
+    }
+
+    public void setHorizontalPosition(int horizontalPosition) {
+        this.horizontalPosition = horizontalPosition;
+    }
 }

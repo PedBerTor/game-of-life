@@ -1,6 +1,9 @@
 package org.gol.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.gol.Grid;
+import org.gol.dto.GridDTO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +17,9 @@ import java.util.Objects;
 public class GridUtils {
 
     private static final String BASE_PATH = "grids/";
-    // TODO: Instantiate Gson object as constant using GsonBuilder (don't forget option to pretty print)
+    private static final Gson GSON = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
     private GridUtils() {
         super();
@@ -25,7 +30,8 @@ public class GridUtils {
         String filePath = BASE_PATH + fileName + ".json";
         try (InputStream inputStream = GridUtils.class.getClassLoader().getResourceAsStream(filePath)) {
             Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
-            res = null; // TODO: Deserialize Reader (JSON) into Grid
+            GridDTO gridDTO = GSON.fromJson(reader, GridDTO.class);
+            res = GridDTO.toGrid(gridDTO);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -33,11 +39,17 @@ public class GridUtils {
     }
 
     public static void saveToFile(Grid grid, String fileName) {
-        String filePath = "src/main/resources/" + BASE_PATH + fileName + ".json";
+        String path = "src/main/resources/" + BASE_PATH + fileName + ".json";
         try {
-            String jsonGrid = ""; // TODO: Serialize Grid into String (JSON)
-            Path createdFile = Files.createFile(Paths.get(filePath));
-            Files.writeString(createdFile, jsonGrid);
+            GridDTO gridDTO = GridDTO.fromGrid(grid);
+            String json = GSON.toJson(gridDTO);
+            Path filePath = Paths.get(path);
+            if (Files.exists(filePath)) {
+                // TODO: Overwrite file
+            } else {
+                Files.createFile(filePath);
+                Files.writeString(filePath, json);
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
