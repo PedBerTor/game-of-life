@@ -2,14 +2,17 @@ package org.gol.dto;
 
 import org.gol.Grid;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class GridDTO {
+
     private int height;
     private int width;
     private Set<CellDTO> aliveCells;
+
+    public GridDTO() {
+        super();
+    }
 
     public int getHeight() {
         return height;
@@ -44,21 +47,10 @@ public class GridDTO {
     }
 
     public static GridDTO fromGrid(Grid grid) {
-        GridDTO gridDTO = new GridDTO();
-        gridDTO.setHeight(grid.getHeight());
-        gridDTO.setWidth(grid.getWidth());
-        Set<CellDTO> aliveCells = new LinkedHashSet<>();
-        for (int i = 0; i < grid.getHeight(); i++) {
-            for (int j = 0; j < grid.getWidth(); j++) {
-                if (grid.getCell(i, j).isAlive()) {
-                    CellDTO cellDTO = new CellDTO();
-                    cellDTO.setVerticalPosition(i);
-                    cellDTO.setHorizontalPosition(j);
-                    aliveCells.add(cellDTO);
-                }
-            }
-        }
-        gridDTO.setAliveCells(aliveCells);
-        return gridDTO;
+        GridDTO res = new GridDTO();
+        res.setHeight(grid.getHeight());
+        res.setWidth(grid.getWidth());
+        res.setAliveCells(CellDTO.fromGrid(grid));
+        return res;
     }
 }
