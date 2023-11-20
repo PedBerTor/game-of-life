@@ -52,6 +52,10 @@ public class Grid {
                 .collect(Collectors.toSet());
     }
 
+    public Cell[][] getCells() {
+        return cells;
+    }
+
     public Cell getCell(int verticalPosition, int horizontalPosition) {
         try {
             return cells[verticalPosition][horizontalPosition];
