@@ -1,16 +1,3 @@
-# Game Of Life
-
-Java implementation of Conway's Game of Life
-
-### Collaborators
-
-* [@Sumlarys](https://www.github.com/Sumlarys)
-
-### License
-
-This project is released under the [MIT License](LICENSE).
-
-```
 Copyright (c) 2024 Pedro Bernaldez and others
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,4 +17,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
