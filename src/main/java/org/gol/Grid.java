@@ -5,12 +5,27 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Grid.
+ *
+ * <p>A {@code Grid} instance can be seen as the game board of this implementation of
+ * Conways's Game of Life. It is, essentially, a two-dimensional array of {@link Cell}
+ * instances.
+ *
+ * @author Pedro Bernaldez
+ */
 public class Grid {
 
     private final int height;
     private final int width;
     private final Cell[][] cells;
 
+    /**
+     * Instantiates a new Grid with the given size and filled with dead cells.
+     *
+     * @param height the height
+     * @param width  the width
+     */
     public Grid(int height, int width) {
         this.height = height;
         this.width = width;
@@ -38,6 +53,17 @@ public class Grid {
     private Set<Cell> getNeighbors(int verticalReference, int horizontalReference) {
         Stream.Builder<Cell> builder = Stream.builder();
 
+        /*
+         * Positions of all possible neighbors for a cell at (i, j):
+         *      (i-1, j-1)
+         *      (i-1, j)
+         *      (i, j-1)
+         *      (i+1, j+1)
+         *      (i+1, j)
+         *      (i, j+1)
+         *      (i-1, j+1)
+         *      (i+1, j-1)
+         */
         builder.add(getCell(verticalReference - 1, horizontalReference - 1));
         builder.add(getCell(verticalReference - 1, horizontalReference));
         builder.add(getCell(verticalReference, horizontalReference - 1));
@@ -52,10 +78,22 @@ public class Grid {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Gets all cells.
+     *
+     * @return the cells
+     */
     public Cell[][] getCells() {
         return cells;
     }
 
+    /**
+     * Gets the cell located in the given position, if any.
+     *
+     * @param verticalPosition   the vertical position of the cell
+     * @param horizontalPosition the horizontal position of the cell
+     * @return the cell or {@code null} if it does not exist
+     */
     public Cell getCell(int verticalPosition, int horizontalPosition) {
         try {
             return cells[verticalPosition][horizontalPosition];
@@ -64,10 +102,20 @@ public class Grid {
         }
     }
 
+    /**
+     * Gets height.
+     *
+     * @return the height
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Gets width.
+     *
+     * @return the width
+     */
     public int getWidth() {
         return width;
     }

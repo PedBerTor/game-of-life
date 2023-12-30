@@ -2,6 +2,11 @@ package org.gol.processor.neighbor;
 
 import org.gol.Grid;
 
+/**
+ * Iterative implementation of {@link NeighborProcessor}.
+ *
+ * @author Pedro Bernaldez
+ */
 public class IterativeNeighborProcessor implements NeighborProcessor {
 
     @Override

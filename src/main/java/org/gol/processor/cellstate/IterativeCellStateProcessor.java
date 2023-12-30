@@ -2,6 +2,11 @@ package org.gol.processor.cellstate;
 
 import org.gol.Grid;
 
+/**
+ * Iterative implementation of {@link CellStateProcessor}.
+ *
+ * @author Pedro Bernaldez
+ */
 public class IterativeCellStateProcessor implements CellStateProcessor {
 
     @Override

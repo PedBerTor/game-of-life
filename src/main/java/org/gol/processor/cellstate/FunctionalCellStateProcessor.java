@@ -6,6 +6,11 @@ import org.gol.Grid;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+/**
+ * Functional implementation of {@link CellStateProcessor}.
+ *
+ * @author Pedro Bernaldez
+ */
 public class FunctionalCellStateProcessor implements CellStateProcessor {
 
     @Override
