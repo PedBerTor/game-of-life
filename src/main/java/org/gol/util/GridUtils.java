@@ -50,7 +50,9 @@ public class GridUtils {
     /**
      * Save the given {@link Grid} to a JSON file with the given name.
      *
-     * <p>Files are saved in the /resources/grids directory.
+     * <p>Files are saved in the /resources/grids directory. If a file with the
+     * given name already exists, its content is overwritten. Otherwise, the file
+     * is created and filled with the JSON resulted from the {@link Grid} serialization.
      *
      * <p>The following example shows how a {@link Grid} instance is serialized
      * as a JSON file:
@@ -79,21 +81,14 @@ public class GridUtils {
      *
      * @param grid     the grid
      * @param fileName the file name
+     * @throws IOException if an error occurred
      */
-    public static void saveToFile(Grid grid, String fileName) {
-        String path = "src/main/resources/" + BASE_PATH + fileName + ".json";
-        try {
-            GridDTO gridDTO = GridDTO.fromGrid(grid);
-            String json = GSON.toJson(gridDTO);
-            Path filePath = Paths.get(path);
-            if (Files.exists(filePath)) {
-                // TODO: Overwrite file
-            } else {
-                Files.createFile(filePath);
-                Files.writeString(filePath, json);
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public static void saveToFile(Grid grid, String fileName) throws IOException {
+        String resourcePath = "src/main/resources/" + BASE_PATH + fileName + ".json";
+        GridDTO gridDTO = GridDTO.fromGrid(grid);
+        Path filePath = Paths.get(resourcePath);
+        Files.writeString(filePath, GSON.toJson(gridDTO),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING);
     }
 }
