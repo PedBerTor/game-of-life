@@ -1,6 +1,55 @@
 # Game Of Life
 
-Java implementation of Conway's Game of Life
+Java implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+
+### Motivation
+
+I discovered Conway's Game of Life while studying computer engineering at the 
+University of Seville. Since that day, I found myself engrossed by the idea of 
+a world in which mathematics decides who perishes and who survives.
+
+For years, I had plans to implement the game from scratch, but time passed and 
+many things happened in my life. I graduated from university, became a researcher, 
+quit, got a job as a software engineer and even adopted a cat. I could not find 
+the right moment to start working on this project.
+
+However, everything changed when [@Sumlarys](https://www.github.com/Sumlarys), 
+a good friend of mine, started studying programming at trade school. Suddenly 
+we found ourselves talking about code almost every day and I thought that this 
+project could be a good learning opportunity for both of us.
+
+> **_NOTE:_** Due to its educational nature, this project is not intended to 
+> represent a production-ready solution. It is a demonstration of various design 
+> patterns, advanced features, and coding techniques. While the code may illustrate 
+> good programming practices, it may not adhere to all the best practices necessary 
+> for a real-world, production-grade application.
+
+### Goals
+
+* Implement Conway's Game of Life using only Java
+* Prioritize the Java library over third-party libraries as much as possible
+* Preprocess neighbors for better efficiency
+* Provide a builder to construct game controller instances programmatically
+
+### Requirements
+
+Java 17 or newer
+
+### Usage
+
+Use [ControllerBuilder](src/main/java/org/gol/controller/ControllerBuilder.java)
+to create an instance of [Controller](src/main/java/org/gol/controller/Controller.java) 
+with various configuration options, and start the game by calling `start`:
+
+```java
+Controller controller = new ControllerBuilder()
+        .setGridHeight(5)
+        .setGridWidth(10)
+        .setGameLoopDuration(1000L)
+        .create();
+
+controller.start();
+```
 
 ### Collaborators
 
