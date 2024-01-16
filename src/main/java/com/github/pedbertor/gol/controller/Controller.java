@@ -35,6 +35,7 @@ public class Controller {
     private final long gameLoopDuration;
     private final NeighborProcessor neighborProcessor;
     private final CellStateProcessor cellStateProcessor;
+    private final boolean isConsoleOutputEnabled;
 
     /**
      * Instantiates a new Controller.
@@ -46,11 +47,13 @@ public class Controller {
      * @param cellStateProcessor the cell state processor
      */
     Controller(int gridHeight, int gridWidth, long gameLoopDuration,
-               NeighborProcessor neighborProcessor, CellStateProcessor cellStateProcessor) {
+               NeighborProcessor neighborProcessor, CellStateProcessor cellStateProcessor,
+               boolean isConsoleOutputEnabled) {
         grid = new Grid(gridHeight, gridWidth);
         this.gameLoopDuration = gameLoopDuration;
         this.neighborProcessor = neighborProcessor;
         this.cellStateProcessor = cellStateProcessor;
+        this.isConsoleOutputEnabled = isConsoleOutputEnabled;
     }
 
     /**
@@ -62,7 +65,9 @@ public class Controller {
      */
     public void start() {
         Runnable gameLoop = () -> {
-            System.out.println(grid);
+            if (isConsoleOutputEnabled) {
+                System.out.println(grid);
+            }
             neighborProcessor.process(grid);
             cellStateProcessor.process(grid);
         };
