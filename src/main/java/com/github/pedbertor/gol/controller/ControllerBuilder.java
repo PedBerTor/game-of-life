@@ -1,8 +1,8 @@
 package com.github.pedbertor.gol.controller;
 
-import com.github.pedbertor.gol.processor.neighbor.FunctionalNeighborProcessor;
 import com.github.pedbertor.gol.processor.cellstate.CellStateProcessor;
 import com.github.pedbertor.gol.processor.cellstate.FunctionalCellStateProcessor;
+import com.github.pedbertor.gol.processor.neighbor.FunctionalNeighborProcessor;
 import com.github.pedbertor.gol.processor.neighbor.NeighborProcessor;
 
 /**
@@ -29,6 +29,7 @@ public class ControllerBuilder {
     private int gridHeight = 20;
     private int gridWidth = 60;
     private long gameLoopDuration = 500L;
+    private boolean isConsoleOutputEnabled = true;
 
     /**
      * Processors are initialized by default in {@link #create() create}, if necessary
@@ -107,6 +108,17 @@ public class ControllerBuilder {
     }
 
     /**
+     * Sets console output state.
+     *
+     * @param isConsoleOutputEnabled the cell state processor
+     * @return a reference to this {@code ControllerBuilder} object
+     */
+    public ControllerBuilder setIsConsoleOutputEnabled(boolean isConsoleOutputEnabled) {
+        this.isConsoleOutputEnabled = isConsoleOutputEnabled;
+        return this;
+    }
+
+    /**
      * Creates a {@link Controller} instance based on the parameters passed to
      * this {@code ControllerBuilder} object.
      *
@@ -120,6 +132,6 @@ public class ControllerBuilder {
             cellStateProcessor = new FunctionalCellStateProcessor();
         }
         return new Controller(gridHeight, gridWidth, gameLoopDuration,
-                neighborProcessor, cellStateProcessor);
+                neighborProcessor, cellStateProcessor, isConsoleOutputEnabled);
     }
 }
