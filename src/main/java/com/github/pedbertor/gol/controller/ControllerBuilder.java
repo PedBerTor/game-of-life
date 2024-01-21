@@ -108,13 +108,13 @@ public class ControllerBuilder {
     }
 
     /**
-     * Sets console output state.
+     * Enables/disables console output.
      *
-     * @param isConsoleOutputEnabled the cell state processor
+     * @param consoleOutputEnabled the console output state
      * @return a reference to this {@code ControllerBuilder} object
      */
-    public ControllerBuilder setIsConsoleOutputEnabled(boolean isConsoleOutputEnabled) {
-        this.isConsoleOutputEnabled = isConsoleOutputEnabled;
+    public ControllerBuilder setConsoleOutputEnabled(boolean consoleOutputEnabled) {
+        isConsoleOutputEnabled = consoleOutputEnabled;
         return this;
     }
 

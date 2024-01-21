@@ -40,11 +40,12 @@ public class Controller {
     /**
      * Instantiates a new Controller.
      *
-     * @param gridHeight         the grid height
-     * @param gridWidth          the grid width
-     * @param gameLoopDuration   the game loop duration
-     * @param neighborProcessor  the neighbor processor
-     * @param cellStateProcessor the cell state processor
+     * @param gridHeight             the grid height
+     * @param gridWidth              the grid width
+     * @param gameLoopDuration       the game loop duration
+     * @param neighborProcessor      the neighbor processor
+     * @param cellStateProcessor     the cell state processor
+     * @param isConsoleOutputEnabled the console output state
      */
     Controller(int gridHeight, int gridWidth, long gameLoopDuration,
                NeighborProcessor neighborProcessor, CellStateProcessor cellStateProcessor,
