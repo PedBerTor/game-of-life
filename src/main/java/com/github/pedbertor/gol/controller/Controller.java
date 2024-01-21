@@ -35,22 +35,26 @@ public class Controller {
     private final long gameLoopDuration;
     private final NeighborProcessor neighborProcessor;
     private final CellStateProcessor cellStateProcessor;
+    private final boolean isConsoleOutputEnabled;
 
     /**
      * Instantiates a new Controller.
      *
-     * @param gridHeight         the grid height
-     * @param gridWidth          the grid width
-     * @param gameLoopDuration   the game loop duration
-     * @param neighborProcessor  the neighbor processor
-     * @param cellStateProcessor the cell state processor
+     * @param gridHeight             the grid height
+     * @param gridWidth              the grid width
+     * @param gameLoopDuration       the game loop duration
+     * @param neighborProcessor      the neighbor processor
+     * @param cellStateProcessor     the cell state processor
+     * @param isConsoleOutputEnabled the console output state
      */
     Controller(int gridHeight, int gridWidth, long gameLoopDuration,
-               NeighborProcessor neighborProcessor, CellStateProcessor cellStateProcessor) {
+               NeighborProcessor neighborProcessor, CellStateProcessor cellStateProcessor,
+               boolean isConsoleOutputEnabled) {
         grid = new Grid(gridHeight, gridWidth);
         this.gameLoopDuration = gameLoopDuration;
         this.neighborProcessor = neighborProcessor;
         this.cellStateProcessor = cellStateProcessor;
+        this.isConsoleOutputEnabled = isConsoleOutputEnabled;
     }
 
     /**
@@ -62,7 +66,9 @@ public class Controller {
      */
     public void start() {
         Runnable gameLoop = () -> {
-            System.out.println(grid);
+            if (isConsoleOutputEnabled) {
+                System.out.println(grid);
+            }
             neighborProcessor.process(grid);
             cellStateProcessor.process(grid);
         };
