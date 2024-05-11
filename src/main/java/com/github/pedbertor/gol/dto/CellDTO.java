@@ -1,23 +1,25 @@
 package com.github.pedbertor.gol.dto;
 
-import com.github.pedbertor.gol.Grid;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.github.pedbertor.gol.gui.component.button.CellButton;
+import com.github.pedbertor.gol.gui.component.panel.GridPanel;
+
 /**
- * Cell DTO for {@link Grid} serialization/deserialization.
+ * Cell DTO for {@link GridPanel} serialization/deserialization.
  *
  * <p>A {@code CellDTO} instance represents the position on both axes of an alive cell
- * in a {@link Grid}. This is essentially all cell information one may need to serialize
- * and deserialize {@link Grid} instances, because cells can be either dead or alive, and
- * the remaining cells will be dead.
+ * in a {@link GridPanel} instance. This is essentially all cell information one may need
+ * to serialize and deserialize {@link GridPanel} instances, because cells can be either
+ * dead or alive, and the remaining cells will be dead.
  *
- * <p>Use the {@link #fromGrid(Grid) fromGrid} method to extract all alive cells from a
- * {@link Grid} in the form of a {@code Set} of {@code CellDTO} instances:
+ * <p>Use the {@link #fromGridPanel(GridPanel) fromGridPanel} method to extract all alive
+ * cells from a {@link GridPanel} instance in the form of a {@code Set} of {@code CellDTO}
+ * instances:
  *
  * <pre>
- * Set<CellDTO> aliveCells = CellDTO.fromGrid(grid);
+ * Set<CellDTO> aliveCells = CellDTO.fromGridPanel(gridPanel);
  * </pre>
  *
  * @author Jo Chong Min
@@ -32,6 +34,17 @@ public class CellDTO {
      */
     public CellDTO() {
         super();
+    }
+
+    /**
+     * Instantiates a new Cell DTO.
+     *
+     * @param verticalPosition   the vertical position
+     * @param horizontalPosition the horizontal position
+     */
+    public CellDTO(int verticalPosition, int horizontalPosition) {
+        this.verticalPosition = verticalPosition;
+        this.horizontalPosition = horizontalPosition;
     }
 
     /**
@@ -71,27 +84,49 @@ public class CellDTO {
     }
 
     /**
-     * Extract all alive cells from the given {@link Grid}.
+     * Extract all alive cells from the given {@link GridPanel} in the form of Cell DTOs.
      *
-     * <p>For each cell in the grid, if alive, an instance of {@code CellDTO} is created based
-     * on its vertical and horizontal position. The {@code CellDTO} instances are collected
-     * into a {@code Set}.
+     * <p>For each alive cell in the grid panel an instance of {@code CellDTO} is created
+     * based on its vertical and horizontal position. The {@code CellDTO} instances are
+     * collected into a {@code Set}.
      *
-     * @param grid the grid
+     * @param gridPanel the grid panel
      * @return the alive cells
      */
-    public static Set<CellDTO> fromGrid(Grid grid) {
+    public static Set<CellDTO> fromGridPanel(GridPanel gridPanel) {
         Set<CellDTO> res = new LinkedHashSet<>();
-        for (int i = 0; i < grid.getHeight(); i++) {
-            for (int j = 0; j < grid.getWidth(); j++) {
-                if (grid.getCell(i, j).isAlive()) {
-                    CellDTO cellDTO = new CellDTO();
-                    cellDTO.setVerticalPosition(i);
-                    cellDTO.setHorizontalPosition(j);
-                    res.add(cellDTO);
-                }
-            }
+        for (CellButton cellButton : gridPanel.getAliveCellButtons()) {
+            CellDTO cellDTO = new CellDTO();
+            cellDTO.setVerticalPosition(cellButton.getVerticalPosition());
+            cellDTO.setHorizontalPosition(cellButton.getHorizontalPosition());
+            res.add(cellDTO);
         }
         return res;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CellDTO cellDTO = (CellDTO) o;
+
+        if (verticalPosition != cellDTO.verticalPosition) return false;
+        return horizontalPosition == cellDTO.horizontalPosition;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = verticalPosition;
+        result = 31 * result + horizontalPosition;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CellDTO{" +
+                "verticalPosition=" + verticalPosition +
+                ", horizontalPosition=" + horizontalPosition +
+                '}';
     }
 }

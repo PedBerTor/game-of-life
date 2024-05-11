@@ -1,28 +1,23 @@
 package com.github.pedbertor.gol.dto;
 
-import com.github.pedbertor.gol.Grid;
+import com.github.pedbertor.gol.gui.GUI;
+import com.github.pedbertor.gol.gui.component.panel.GridPanel;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
- * Grid DTO for {@link Grid} serialization/deserialization.
+ * Grid DTO for {@link GridPanel} serialization/deserialization.
  *
- * <p>A {@code GridDTO} instance represents the state of a {@link Grid} at a particular
+ * <p>A {@code GridDTO} instance represents the state of a {@link GridPanel} at a particular
  * iteration, which comprises its size (height and width) and the position of all alive
  * cells in it.
  *
- * <p>Use the {@link #toGrid(GridDTO) toGrid} method to get a {@link Grid} instance
- * from a {@code GridDTO}:
+ * <p>Use the {@link #fromGridPanel(GridPanel) fromGridPanel} method to get a {@code GridDTO}
+ * instance from a {@link GridPanel} instance:
  *
  * <pre>
- * Grid grid = GridDTO.toGrid(gridDTO);
- * </pre>
- *
- * <p>Use the {@link #fromGrid(Grid) fromGrid} method to get a {@code GridDTO} instance
- * from a {@link Grid}:
- *
- * <pre>
- * GridDTO gridDTO = GridDTO.fromGrid(grid);
+ * GridDTO gridDTO = GridDTO.fromGridPanel(gridPanel);
  * </pre>
  *
  * @author Jo Chong Min
@@ -95,30 +90,45 @@ public class GridDTO {
     }
 
     /**
-     * Gets a {@link Grid} from the given {@code GridDTO}.
+     * Gets a {@code GridDTO} from the given {@link GridPanel}.
      *
-     * @param gridDTO the grid DTO
-     * @return the grid
-     */
-    public static Grid toGrid(GridDTO gridDTO) {
-        Grid grid = new Grid(gridDTO.getHeight(), gridDTO.getWidth());
-        for (CellDTO cellDTO : gridDTO.getAliveCells()) {
-            grid.getCell(cellDTO.getVerticalPosition(), cellDTO.getHorizontalPosition()).switchState();
-        }
-        return grid;
-    }
-
-    /**
-     * Gets a {@code GridDTO} from the given {@link Grid}.
-     *
-     * @param grid the grid
+     * @param gridPanel the grid panel
      * @return the grid DTO
      */
-    public static GridDTO fromGrid(Grid grid) {
+    public static GridDTO fromGridPanel(GridPanel gridPanel) {
         GridDTO res = new GridDTO();
-        res.setHeight(grid.getHeight());
-        res.setWidth(grid.getWidth());
-        res.setAliveCells(CellDTO.fromGrid(grid));
+        res.setHeight(GUI.GRID_HEIGHT);
+        res.setWidth(GUI.GRID_WIDTH);
+        res.setAliveCells(CellDTO.fromGridPanel(gridPanel));
         return res;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GridDTO gridDTO = (GridDTO) o;
+
+        if (height != gridDTO.height) return false;
+        if (width != gridDTO.width) return false;
+        return Objects.equals(aliveCells, gridDTO.aliveCells);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = height;
+        result = 31 * result + width;
+        result = 31 * result + (aliveCells != null ? aliveCells.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "GridDTO{" +
+                "height=" + height +
+                ", width=" + width +
+                ", aliveCells=" + aliveCells +
+                '}';
     }
 }

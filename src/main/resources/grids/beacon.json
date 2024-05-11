@@ -1,0 +1,38 @@
+{
+  "height": 30,
+  "width": 48,
+  "aliveCells": [
+    {
+      "verticalPosition": 16,
+      "horizontalPosition": 24
+    },
+    {
+      "verticalPosition": 14,
+      "horizontalPosition": 22
+    },
+    {
+      "verticalPosition": 15,
+      "horizontalPosition": 24
+    },
+    {
+      "verticalPosition": 16,
+      "horizontalPosition": 23
+    },
+    {
+      "verticalPosition": 14,
+      "horizontalPosition": 21
+    },
+    {
+      "verticalPosition": 13,
+      "horizontalPosition": 22
+    },
+    {
+      "verticalPosition": 15,
+      "horizontalPosition": 23
+    },
+    {
+      "verticalPosition": 13,
+      "horizontalPosition": 21
+    }
+  ]
+}

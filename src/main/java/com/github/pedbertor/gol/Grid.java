@@ -1,5 +1,6 @@
 package com.github.pedbertor.gol;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class Grid {
     private void fillGrid() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                cells[i][j] = new Cell();
+                cells[i][j] = new Cell(i, j);
             }
         }
     }
@@ -90,8 +91,8 @@ public class Grid {
     /**
      * Gets the cell located in the given position, if any.
      *
-     * @param verticalPosition   the vertical position of the cell
-     * @param horizontalPosition the horizontal position of the cell
+     * @param verticalPosition   the vertical position
+     * @param horizontalPosition the horizontal position
      * @return the cell or {@code null} if it does not exist
      */
     public Cell getCell(int verticalPosition, int horizontalPosition) {
@@ -138,6 +139,14 @@ public class Grid {
             }
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = height;
+        result = 31 * result + width;
+        result = 31 * result + Arrays.deepHashCode(cells);
+        return result;
     }
 
     @Override

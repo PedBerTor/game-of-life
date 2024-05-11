@@ -1,5 +1,7 @@
 package com.github.pedbertor.gol;
 
+import com.github.pedbertor.gol.gui.GUI;
+
 import java.util.Collections;
 import java.util.Set;
 
@@ -15,31 +17,45 @@ import java.util.Set;
  */
 public class Cell {
 
+    private final int verticalPosition;
+    private final int horizontalPosition;
+
     private boolean isAlive = false;
     private Set<Cell> neighbors = Collections.emptySet();
     private int aliveNeighbors = 0;
 
     /**
      * Instantiates a new Cell.
+     *
+     * @param verticalPosition   the vertical position
+     * @param horizontalPosition the horizontal position
      */
-    public Cell() {
-        super();
+    public Cell(int verticalPosition, int horizontalPosition) {
+        this.verticalPosition = verticalPosition;
+        this.horizontalPosition = horizontalPosition;
     }
 
     /**
-     * Is alive boolean.
+     * Checks whether the cell is alive.
      *
-     * @return the boolean
+     * @return true if the cell is alive; false otherwise
      */
     public boolean isAlive() {
         return isAlive;
     }
 
     /**
-     * Switch state.
+     * Switches the state of the cell.
      */
     public void switchState() {
         isAlive = !isAlive;
+    }
+
+    /**
+     * Kills the cell.
+     */
+    public void kill() {
+        isAlive = false;
     }
 
     /**
@@ -70,6 +86,7 @@ public class Cell {
     public void updateStateBasedOnNeighbors() {
         if (isAliveAndDies() || isDeadAndRevives()) {
             switchState();
+            GUI.switchCellButtonState(verticalPosition, horizontalPosition);
         }
         aliveNeighbors = 0;
     }
@@ -80,5 +97,32 @@ public class Cell {
 
     private boolean isDeadAndRevives() {
         return !isAlive && aliveNeighbors == 3;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cell cell = (Cell) o;
+
+        if (verticalPosition != cell.verticalPosition) return false;
+        return horizontalPosition == cell.horizontalPosition;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = verticalPosition;
+        result = 31 * result + horizontalPosition;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "verticalPosition=" + verticalPosition +
+                ", horizontalPosition=" + horizontalPosition +
+                ", isAlive=" + isAlive +
+                '}';
     }
 }

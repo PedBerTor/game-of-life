@@ -1,11 +1,12 @@
 package com.github.pedbertor.gol.dto;
 
-import com.github.pedbertor.gol.Grid;
+import com.github.pedbertor.gol.gui.component.panel.GridPanel;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for {@link CellDTO}.
@@ -14,31 +15,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class CellDTOTest {
 
-    private static final int GRID_HEIGHT = 5;
-    private static final int GRID_WIDTH = 5;
-    private static final int[][] ALIVE_CELLS = new int[][]{
-            new int[]{2, 1},
-            new int[]{2, 2},
-            new int[]{2, 3}
-    };
+    private static final List<CellDTO> ALIVE_CELLS = List.of(
+            new CellDTO(2, 1),
+            new CellDTO(2, 2),
+            new CellDTO(2, 3)
+    );
 
-    private final Grid grid = createTestGrid();
+    private final GridPanel gridPanel = createTestGridPanel();
 
     @Test
-    public void checkFromGrid() {
-        List<CellDTO> aliveCells = CellDTO.fromGrid(grid).stream().toList();
-        assertEquals(ALIVE_CELLS.length, aliveCells.size());
-        for (int i = 0; i < ALIVE_CELLS.length; i++) {
-            assertEquals(ALIVE_CELLS[i][0], aliveCells.get(i).getVerticalPosition());
-            assertEquals(ALIVE_CELLS[i][1], aliveCells.get(i).getHorizontalPosition());
+    public void checkFromGridPanel() {
+        List<CellDTO> aliveCells = CellDTO.fromGridPanel(gridPanel).stream().toList();
+        assertEquals(ALIVE_CELLS.size(), aliveCells.size());
+        for (CellDTO aliveCell : aliveCells) {
+            assertTrue(ALIVE_CELLS.contains(aliveCell));
         }
     }
 
-    private Grid createTestGrid() {
-        Grid grid = new Grid(GRID_HEIGHT, GRID_WIDTH);
-        for (int[] aliveCell : ALIVE_CELLS) {
-            grid.getCell(aliveCell[0], aliveCell[1]).switchState();
+    private GridPanel createTestGridPanel() {
+        GridPanel testGridPanel = new GridPanel();
+        for (CellDTO aliveCell : ALIVE_CELLS) {
+            testGridPanel.getCellButton(
+                    aliveCell.getVerticalPosition(),
+                    aliveCell.getHorizontalPosition()
+            ).switchState();
         }
-        return grid;
+        return testGridPanel;
     }
 }

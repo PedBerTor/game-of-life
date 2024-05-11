@@ -1,12 +1,16 @@
 package com.github.pedbertor.gol.controller;
 
+import com.github.pedbertor.gol.Cell;
 import com.github.pedbertor.gol.Grid;
 import com.github.pedbertor.gol.processor.cellstate.CellStateProcessor;
 import com.github.pedbertor.gol.processor.neighbor.NeighborProcessor;
 
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 /**
  * Game controller.
@@ -37,6 +41,8 @@ public class Controller {
     private final CellStateProcessor cellStateProcessor;
     private final boolean isConsoleOutputEnabled;
 
+    private ScheduledFuture<?> scheduledGameLoop;
+
     /**
      * Instantiates a new Controller.
      *
@@ -58,8 +64,9 @@ public class Controller {
     }
 
     /**
-     * Defines the game loop as a sequence of three steps: (1) print the grid,
-     * (2) process neighbors and (3) process cells state.
+     * Defines the game loop as a sequence of three steps: (1) print the grid
+     * if console output is enabled, (2) process neighbors and (3) process cells
+     * state.
      *
      * <p>Once defined, a {@link ScheduledExecutorService} instance is used to
      * run the game loop periodically.
@@ -72,6 +79,34 @@ public class Controller {
             neighborProcessor.process(grid);
             cellStateProcessor.process(grid);
         };
-        SCHEDULER.scheduleAtFixedRate(gameLoop, 0L, gameLoopDuration, TimeUnit.MILLISECONDS);
+        scheduledGameLoop = SCHEDULER.scheduleAtFixedRate(gameLoop, 0L, gameLoopDuration, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Stops the game loop if it has been started.
+     */
+    public void stop() {
+        if (scheduledGameLoop != null) {
+            scheduledGameLoop.cancel(true);
+        }
+    }
+
+    /**
+     * Resets the state of all cells in the internal grid.
+     */
+    public void reset() {
+        Arrays.stream(grid.getCells())
+                .flatMap(Stream::of)
+                .forEach(Cell::kill);
+    }
+
+    /**
+     * Switches the state of the cell located at the given position in the internal grid.
+     *
+     * @param verticalPosition   the vertical position
+     * @param horizontalPosition the horizontal position
+     */
+    public void switchCellState(int verticalPosition, int horizontalPosition) {
+        grid.getCell(verticalPosition, horizontalPosition).switchState();
     }
 }

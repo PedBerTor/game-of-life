@@ -20,7 +20,7 @@ public class CellTest {
 
     @BeforeEach
     public void init() {
-        cell = new Cell();
+        cell = new Cell(0, 0);
     }
 
     @Test
@@ -29,6 +29,15 @@ public class CellTest {
         cell.switchState();
         assertTrue(cell.isAlive());
         cell.switchState();
+        assertFalse(cell.isAlive());
+    }
+
+    @Test
+    public void checkKill() {
+        assertFalse(cell.isAlive());
+        cell.switchState();
+        assertTrue(cell.isAlive());
+        cell.kill();
         assertFalse(cell.isAlive());
     }
 
@@ -95,13 +104,13 @@ public class CellTest {
         Set<Cell> res = new LinkedHashSet<>();
         // Generate alive neighbors (if any)
         for (int i = 0; i < aliveNeighbors; i++) {
-            Cell aliveNeighbor = new Cell();
+            Cell aliveNeighbor = new Cell(2, i);
             aliveNeighbor.switchState();
             res.add(aliveNeighbor);
         }
         // Generate dead neighbors (if any)
         for (int i = 0; i < (8 - aliveNeighbors); i++) {
-            Cell deadNeighbor = new Cell();
+            Cell deadNeighbor = new Cell(3, i);
             res.add(deadNeighbor);
         }
         return res;
