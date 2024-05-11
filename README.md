@@ -30,6 +30,7 @@ project could be a good learning opportunity for both of us.
 * Prioritize the Java library over third-party libraries as much as possible
 * Preprocess neighbors for better efficiency
 * Provide a builder to construct game controller instances programmatically
+* Create a GUI to play the game interactively
 
 ### Requirements
 
@@ -37,17 +38,34 @@ Java 17 or newer
 
 ### Usage
 
-Use [ControllerBuilder](src/main/java/org/gol/controller/ControllerBuilder.java)
-to create an instance of [Controller](src/main/java/org/gol/controller/Controller.java) 
-with various configuration options, and start the game by calling `start`:
+#### Start the game with the GUI (recommended)
+
+Create an instance of the game graphical user interface ([GUI](src/main/java/com/github/pedbertor/gol/gui/GUI.java)):
 
 ```java
+GUI.create();
+```
+
+#### Start the game with Controller
+
+Alternatively, it is possible to use [ControllerBuilder](src/main/java/com/github/pedbertor/gol/controller/ControllerBuilder.java)
+to create an instance of [Controller](src/main/java/com/github/pedbertor/gol/controller/Controller.java) with various configuration 
+options, set the initial generation of alive cells, and start the game by calling `start`:
+
+```java
+// Create a game controller with a 5x10 grid and 1 second game loop duration
 Controller controller = new ControllerBuilder()
         .setGridHeight(5)
         .setGridWidth(10)
         .setGameLoopDuration(1000L)
         .create();
 
+// Set initial pattern (blinker oscillator)
+controller.switchCellState(2, 3);
+controller.switchCellState(2, 4);
+controller.switchCellState(2, 5);
+
+// Start the game
 controller.start();
 ```
 
